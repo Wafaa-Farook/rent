@@ -1,0 +1,37 @@
+/* Dash.module.css */
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+/* Unique backgrounds can be set via additional classes */
+.ownerBackground {
+  background-color: #f0f8ff;
+}
+
+.renterBackground {
+  background-color: #fffaf0;
+}
+
+.ownerHeading {
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+.renterHeading {
+  color: #cc6600;
+  margin-bottom: 20px;
+}

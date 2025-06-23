@@ -6,6 +6,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import OwnerDashboard from "./pages/OwnerDashboard";
 import RenterDashboard from "./pages/RenterDashboard";
+import AddItem from "./pages/AddItem";        // ✅ Import AddItem
+import EditItem from "./pages/EditItem"; 
 
 import Navbar from "./components/Navbar";
 import styles from "./styles/App.module.css";
@@ -22,6 +24,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/owner-dashboard" element={<OwnerDashboard />} />
             <Route path="/renter-dashboard" element={<RenterDashboard />} />
+            <Route path="/add-item" element={<AddItem />} />
+            <Route path="/edit-item/:id" element={<EditItem />} />
           </Routes>
         </main>
       </div>

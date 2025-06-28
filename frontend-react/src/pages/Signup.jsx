@@ -32,7 +32,7 @@ export default function SignupForm() {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("http://rentro-backend-0gnk.onrender.com/api/signup", {
+        const response = await fetch("https://rentro-backend-0gnk.onrender.com/api/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

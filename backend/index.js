@@ -13,7 +13,10 @@ const rentalUtils = require("./routes/utils");
 
 // similarly renterRoutes if any
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000", "https://rentro-frontend-sand.vercel.app"],
+  credentials: true
+}));
 app.use(express.json());
 
 app.use("/api", authRoutes);

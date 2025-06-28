@@ -37,7 +37,7 @@ const toggleSection = (sectionName) => {
 
   const fetchRentalHistory = async () => {
     try {
-      const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/renter/history/${renterId}`, {
+      const res = await fetch(`https://rentro-backend-0gnk.onrender.com/api/renter/history/${renterId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -57,7 +57,7 @@ const toggleSection = (sectionName) => {
 
   const fetchAvailableItems = async () => {
     try {
-      const res = await fetch("http://rentro-backend-0gnk.onrender.com/api/renter/available");
+      const res = await fetch("https://rentro-backend-0gnk.onrender.com/api/renter/available");
       const data = await res.json();
       setAvailableItems(data.items);
     } catch (err) {
@@ -67,7 +67,7 @@ const toggleSection = (sectionName) => {
 
   const fetchRequests = async () => {
     try {
-      const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/renter/requests/${renterId}`, {
+      const res = await fetch(`https://rentro-backend-0gnk.onrender.com/api/renter/requests/${renterId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -96,7 +96,7 @@ const handleRequest = async (itemId) => {
   }
 
   try {
-    const res = await fetch("http://rentro-backend-0gnk.onrender.com/api/renter", {
+    const res = await fetch("https://rentro-backend-0gnk.onrender.com/api/renter", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

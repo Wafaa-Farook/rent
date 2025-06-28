@@ -8,7 +8,7 @@ const Home = () => {
       <h1 className={styles.title}>Welcome to Rentro</h1>
       <p className={styles.subtitle}>Your platform to rent and earn.</p>
       <div className={styles.links}>
-        <Link to="/signup" className={styles.link}>Sign Up</Link>
+        <Link to="/signup" className={styles.link}>SignUp</Link>
         <span className={styles.separator}> | </span>
         <Link to="/login" className={styles.link}>Login</Link>
       </div>

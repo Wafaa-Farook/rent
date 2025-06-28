@@ -25,7 +25,7 @@ export default function EditItem() {
         if (!json.items) return setError("No items found");
         const item = json.items.find((i) => i.id === parseInt(id));
         if (!item) return navigate("/owner-dashboard");
-        setForm(item);
+        setForm({ ...item, imageFile: null }); // Add imageFile to state
       })
       .catch((err) => {
         console.error(err);
@@ -36,19 +36,49 @@ export default function EditItem() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  const handleImageUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+    return data.secure_url;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      let updatedImageUrl = form.image_url;
+
+      if (form.imageFile) {
+        updatedImageUrl = await handleImageUpload(form.imageFile);
+      }
+
       const res = await fetch(`http://localhost:5000/api/items/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          image_url: updatedImageUrl,
+          imageFile: undefined, // Don't send the file in request
+        }),
       });
+
       const json = await res.json();
       if (!res.ok) return setError(json.message || "Update failed");
+
       navigate("/owner-dashboard");
     } catch (err) {
       console.error(err);
@@ -63,18 +93,58 @@ export default function EditItem() {
     <form onSubmit={handleSubmit} className={styles.formContainer}>
       <h2 className={styles.formTitle}>Edit Item</h2>
 
-      {["Name", "Description", "Image_url", "Rent_per_day"].map((field) => (
-        <div key={field} className={styles.formGroup}>
-          <label>{field.replace("_", " ")}</label>
-          <input
-            type={field === "rent_per_day" ? "number" : "text"}
-            name={field}
-            value={form[field]}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      ))}
+      <div className={styles.formGroup}>
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>Description</label>
+        <input
+          type="text"
+          name="description"
+          value={form.description}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>Rent per Day (₹)</label>
+        <input
+          type="number"
+          name="rent_per_day"
+          value={form.rent_per_day}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>Current Image</label>
+        <img
+          src={form.image_url}
+          alt="Current"
+          style={{ maxWidth: "200px", display: "block", marginBottom: "8px" }}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>Update Image (optional)</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            setForm((prev) => ({ ...prev, imageFile: e.target.files[0] }))
+          }
+        />
+      </div>
 
       <div className={styles.formGroup}>
         <label>Availability</label>

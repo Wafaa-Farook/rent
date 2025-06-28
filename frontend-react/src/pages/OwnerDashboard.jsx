@@ -118,7 +118,7 @@ export default function OwnerDashboard() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      alert(`Request ${action}ed successfully`);
+      alert(`Request ${action}d successfully`);
       fetchPendingRequests();
     } catch (err) {
       alert("Failed to update request");

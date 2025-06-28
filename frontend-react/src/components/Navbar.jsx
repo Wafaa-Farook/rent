@@ -24,8 +24,7 @@ export default function Navbar() {
           </li>
         ) : (
           <>
-            <li><Link to="/signup">SignUp</Link></li>
-            <li><Link to="/login">Login</Link></li>
+            
           </>
         )}
       </ul>

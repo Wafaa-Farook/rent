@@ -143,7 +143,7 @@ export default function OwnerDashboard() {
   return (
     <div className={`${styles.container} ${styles.ownerBackground}`}>
       <h1 className={styles.ownerHeading}>Welcome, {userName}!</h1>
-      <p>Add properties, handle rental requests, and view rental history.</p>
+      <p>Add properties, handle rental requests, and view rental analytics.</p>
       <button onClick={() => navigate(`/add-item`)} className={styles.addButton}>Add New Item</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
 

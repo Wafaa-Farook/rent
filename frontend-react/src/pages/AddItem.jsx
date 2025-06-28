@@ -41,7 +41,7 @@ export default function AddItem() {
       imageUrl = await handleImageUpload(form.imageFile);
     }
 
-    const res = await fetch(`http://localhost:5000/api/items/owner/${ownerId}`, {
+    const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/items/owner/${ownerId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

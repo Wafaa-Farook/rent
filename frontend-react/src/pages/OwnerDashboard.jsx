@@ -96,7 +96,7 @@ export default function OwnerDashboard() {
 
   const fetchPendingRequests = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/rentals/owner/${ownerId}`, {
+      const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/rentals/owner/${ownerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -112,7 +112,7 @@ export default function OwnerDashboard() {
 
   const handleApproval = async (id, action) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/rentals/${action}/${id}`, {
+      const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/rentals/${action}/${id}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -127,7 +127,7 @@ export default function OwnerDashboard() {
 
   const handleMarkAsPaid = async (rentalId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/rentals/${rentalId}/mark-paid`, {
+      const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/rentals/${rentalId}/mark-paid`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
       });

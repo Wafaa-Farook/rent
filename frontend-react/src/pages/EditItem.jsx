@@ -17,7 +17,7 @@ export default function EditItem() {
     const decoded = jwtDecode(token);
     const ownerId = decoded?.id;
 
-    fetch(`http://localhost:5000/api/items/owner/${ownerId}`, {
+    fetch(`http://rentro-backend-0gnk.onrender.com/api/items/owner/${ownerId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((r) => r.json())
@@ -63,7 +63,7 @@ export default function EditItem() {
         updatedImageUrl = await handleImageUpload(form.imageFile);
       }
 
-      const res = await fetch(`http://localhost:5000/api/items/${id}`, {
+      const res = await fetch(`http://rentro-backend-0gnk.onrender.com/api/items/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

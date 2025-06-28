@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../styles/Auth.module.css"; // ✅ Scoped styles
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
@@ -6,14 +7,14 @@ export default function SignupForm() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "renter", // default value
+    role: "renter",
   });
 
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validate = () => {
@@ -21,85 +22,110 @@ export default function SignupForm() {
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.includes("@")) newErrors.email = "Invalid email";
     if (formData.password.length < 6) newErrors.password = "Password too short";
-    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const validationErrors = validate();
-  if (Object.keys(validationErrors).length === 0) {
-    try {
-      const response = await fetch("http://localhost:5000/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role
-        })
-      });
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        const response = await fetch("http://localhost:5000/api/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            role: formData.role,
+          }),
+        });
 
-      const data = await response.json();
-      console.log(data);
+        const data = await response.json();
 
-      if (response.ok) {
-        alert("Signup successful!");
-        // Optionally store token:
-        localStorage.setItem("token", data.token);
-        // Redirect to login page
-        window.location.href = "/login";
-      } else {
-        alert(data.message || "Signup failed");
+        if (response.ok) {
+          alert("Signup successful!");
+          localStorage.setItem("token", data.token);
+          window.location.href = "/login";
+        } else {
+          alert(data.message || "Signup failed");
+        }
+      } catch (error) {
+        console.error("Error submitting signup:", error);
+        alert("Something went wrong");
       }
-    } catch (error) {
-      console.error("Error submitting signup:", error);
-      alert("Something went wrong");
+    } else {
+      setErrors(validationErrors);
     }
-  } else {
-    setErrors(validationErrors);
-  }
-};
-
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name</label><br />
-        <input name="name" value={formData.name} onChange={handleChange} />
-        {errors.name && <p style={{color: "red"}}>{errors.name}</p>}
-      </div>
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2 className={styles.title}>Create Your Account</h2>
 
-      <div>
-        <label>Email</label><br />
-        <input name="email" type="email" value={formData.email} onChange={handleChange} />
-        {errors.email && <p style={{color: "red"}}>{errors.email}</p>}
-      </div>
+        <label className={styles.label}>Name</label>
+        <input
+          name="name"
+          className={styles.input}
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        {errors.name && <p className={styles.error}>{errors.name}</p>}
 
-      <div>
-        <label>Password</label><br />
-        <input name="password" type="password" value={formData.password} onChange={handleChange} />
-        {errors.password && <p style={{color: "red"}}>{errors.password}</p>}
-      </div>
+        <label className={styles.label}>Email</label>
+        <input
+          name="email"
+          type="email"
+          className={styles.input}
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        {errors.email && <p className={styles.error}>{errors.email}</p>}
 
-      <div>
-        <label>Confirm Password</label><br />
-        <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} />
-        {errors.confirmPassword && <p style={{color: "red"}}>{errors.confirmPassword}</p>}
-      </div>
+        <label className={styles.label}>Password</label>
+        <input
+          name="password"
+          type="password"
+          className={styles.input}
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        {errors.password && <p className={styles.error}>{errors.password}</p>}
 
-      <div>
-        <label>Role</label><br />
-        <select name="role" value={formData.role} onChange={handleChange}>
+        <label className={styles.label}>Confirm Password</label>
+        <input
+          name="confirmPassword"
+          type="password"
+          className={styles.input}
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+        {errors.confirmPassword && (
+          <p className={styles.error}>{errors.confirmPassword}</p>
+        )}
+
+        <label className={styles.label}>Role</label>
+        <select
+          name="role"
+          className={styles.input}
+          value={formData.role}
+          onChange={handleChange}
+        >
           <option value="owner">Owner</option>
           <option value="renter">Renter</option>
         </select>
-      </div>
 
-      <button type="submit">Sign Up</button>
-    </form>
+        <button type="submit" className={styles.button}>
+          Sign Up
+        </button>
+      </form>
+    </div>
   );
 }

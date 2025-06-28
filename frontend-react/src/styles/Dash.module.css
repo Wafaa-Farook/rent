@@ -14,7 +14,55 @@
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 6px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.card h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #333;
+}
+
+.card p,
+.card label,
+.card li {
+  line-height: 1.6;
+  font-size: 14px;
+  color: #444;
+}
+
+.card li {
+  margin-bottom: 12px;
+}
+
+.card input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.section {
+  margin-top: 40px;
+}
+
+.addButton {
+  background:#1e3a8a;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  background: linear-gradient(to right, #1e3a8a, #131181);
+  transform: scale(1.03);
 }
 
 /* Unique backgrounds can be set via additional classes */
@@ -23,7 +71,7 @@
 }
 
 .renterBackground {
-  background-color: #fffaf0;
+  background-color: #f0f8ff;
 }
 
 .ownerHeading {
@@ -35,3 +83,217 @@
   color: #cc6600;
   margin-bottom: 20px;
 }
+/* Dash.module.css */
+.requestButton {
+  background-color: #131181;
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  margin-top: 10px;
+}
+
+.requestButton:hover {
+  background-color: #131181;
+}
+
+.statusApproved {
+  color: green !important;
+  font-weight: bold;
+}
+
+.statusPending {
+  color: orange !important;
+  font-weight: bold;
+}
+
+.statusRejected {
+  color: red !important;
+  font-weight: bold;
+}
+
+.statusCompleted {
+  color: blue !important;
+  font-weight: bold;
+}
+
+
+.paymentPaid {
+  color: green;
+}
+
+.paymentUnpaid {
+  color: red;
+}
+
+.itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+/* --- Global container spacing improvement --- */
+.container {
+  max-width: 1000px;
+  padding: 30px;
+  margin: 50px auto;
+  line-height: 1.7;
+}
+
+/* --- Card improvement for more breathing room --- */
+.card {
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+/* --- Headings: better spacing and font-weight --- */
+.card h2 {
+  margin-bottom: 18px;
+  font-size: 22px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+
+/* --- Input and label spacing --- */
+.card label {
+  display: block;
+  margin: 12px 0 4px;
+  font-weight: 500;
+}
+
+.card input[type="date"] {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+/* --- Improved list spacing --- */
+.card ul {
+  padding-left: 20px;
+}
+
+.card li {
+  margin-bottom: 18px;
+}
+
+/* --- Buttons: match theme and make them more consistent --- */
+button {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+/* --- Specifically request and action buttons --- */
+.requestButton,
+.itemButtons button,
+.addButton {
+  font-weight: 500;
+  background-color: #1e3a8a;
+  color: white;
+}
+
+.itemButtons button {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+/* --- Image sizing consistency --- */
+.itemImage {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+.sectionHeader {
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+
+a.sectionHeader {
+  text-decoration: none;
+}
+.sectionHeader:hover {
+  text-decoration: none;
+  color: #153e90;
+}
+.dateContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px; /* Adds space between Start and End date inputs */
+  margin-top: 4px;
+  flex-wrap: nowrap;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+}
+
+.dateGroup label {
+  font-size: 0.7rem;
+  margin-bottom: 2px;
+}
+
+.dateGroup input {
+  padding: 4px 6px;
+  font-size: 0.75rem;
+  width: 110px;
+}
+
+
+.itemRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #fdfdfd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  gap: 20px;
+}
+
+.itemImage {
+  width: 100px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.itemDetails {
+  flex: 2;
+  padding-top: 4px;
+}
+
+.requestSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-width: 180px;
+}
+

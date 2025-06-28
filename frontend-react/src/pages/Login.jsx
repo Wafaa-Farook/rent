@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // For programmatic navigation
+import { useNavigate } from "react-router-dom";
+import styles from "../styles/Auth.module.css"; // ✅ Use this
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -21,18 +22,16 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (response.ok) {
-        // Store token and user data in localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.user.role);
         localStorage.setItem("userId", data.user.id);
 
-        // Redirect based on role
         if (data.user.role === "owner") {
           navigate("/owner-dashboard");
         } else if (data.user.role === "renter") {
           navigate("/renter-dashboard");
         } else {
-          navigate("/"); // fallback to home
+          navigate("/");
         }
       } else {
         setError(data.message || "Login failed");
@@ -43,29 +42,34 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Email</label><br />
+    <div className={styles.formContainer}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h2 className={styles.title}>Login</h2>
+
+        <label className={styles.label}>Email</label>
         <input
           type="email"
+          className={styles.input}
+          placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </div>
-      <div>
-        <label>Password</label><br />
+
+        <label className={styles.label}>Password</label>
         <input
           type="password"
+          className={styles.input}
+          placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
 
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit" className={styles.button}>Login</button>
+      </form>
+    </div>
   );
 }

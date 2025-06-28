@@ -6,7 +6,7 @@ const db = require("../db");
 router.get("/owner/:userId/properties", (req, res) => {
   const userId = req.params.userId;
   db.query(
-    "SELECT id, title, location FROM properties WHERE owner_id = ?",
+    "SELECT id, title, location FROM properties WHERE owner_id = ? and is_deleted = FALSE",
     [userId],
     (err, results) => {
       if (err) return res.status(500).json({ message: "DB error" });
@@ -32,17 +32,5 @@ router.get("/owner/:userId/rental-requests", (req, res) => {
   );
 });
 
-// 3. Get Owner Profile
-router.get("/owner/:userId/profile", (req, res) => {
-  const userId = req.params.userId;
-  db.query(
-    "SELECT id, name, email FROM users WHERE id = ?",
-    [userId],
-    (err, results) => {
-      if (err || results.length === 0) return res.status(500).json({ message: "Profile not found" });
-      res.json({ profile: results[0] });
-    }
-  );
-});
 
 module.exports = router;

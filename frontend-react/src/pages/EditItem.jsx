@@ -1,7 +1,7 @@
-// src/pages/EditItem.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import styles from "../styles/Item.module.css";
 
 export default function EditItem() {
   const token = localStorage.getItem("token");
@@ -18,16 +18,11 @@ export default function EditItem() {
     const ownerId = decoded?.id;
 
     fetch(`http://localhost:5000/api/items/owner/${ownerId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((r) => r.json())
       .then((json) => {
-        if (!json.items) {
-          setError("No items found");
-          return;
-        }
+        if (!json.items) return setError("No items found");
         const item = json.items.find((i) => i.id === parseInt(id));
         if (!item) return navigate("/owner-dashboard");
         setForm(item);
@@ -53,9 +48,7 @@ export default function EditItem() {
         body: JSON.stringify(form),
       });
       const json = await res.json();
-      if (!res.ok) {
-        return setError(json.message || "Update failed");
-      }
+      if (!res.ok) return setError(json.message || "Update failed");
       navigate("/owner-dashboard");
     } catch (err) {
       console.error(err);
@@ -63,30 +56,27 @@ export default function EditItem() {
     }
   };
 
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (error) return <p className={styles.errorMessage}>{error}</p>;
   if (!form) return <p>Loading...</p>;
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ maxWidth: "400px", margin: "auto", padding: "20px" }}
-    >
-      <h2>Edit Item</h2>
-      {["name", "description", "image_url", "rent_per_day"].map((f) => (
-        <div key={f} style={{ marginBottom: "12px" }}>
-          <label>{f.replace("_", " ")}</label>
-          <br />
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <h2 className={styles.formTitle}>Edit Item</h2>
+
+      {["Name", "Description", "Image_url", "Rent_per_day"].map((field) => (
+        <div key={field} className={styles.formGroup}>
+          <label>{field.replace("_", " ")}</label>
           <input
-            type={f === "rent_per_day" ? "number" : "text"}
-            name={f}
-            value={form[f]}
+            type={field === "rent_per_day" ? "number" : "text"}
+            name={field}
+            value={form[field]}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
           />
         </div>
       ))}
-      <div style={{ marginBottom: "12px" }}>
+
+      <div className={styles.formGroup}>
         <label>Availability</label>
         <select
           name="availability"
@@ -94,13 +84,13 @@ export default function EditItem() {
           onChange={(e) =>
             setForm({ ...form, availability: e.target.value === "true" })
           }
-          style={{ width: "100%", padding: "8px" }}
         >
           <option value="true">Available</option>
           <option value="false">Rented</option>
         </select>
       </div>
-      <button type="submit" style={{ padding: "10px 20px" }}>
+
+      <button type="submit" className={styles.submitButton}>
         Update Item
       </button>
     </form>
